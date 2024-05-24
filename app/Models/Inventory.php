@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Inventory extends Model
 {
     use HasFactory;
@@ -16,4 +16,9 @@ class Inventory extends Model
         'quantity',
         'last_update'
     ];
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Inventory::class);
+    }
 }

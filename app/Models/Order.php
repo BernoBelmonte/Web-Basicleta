@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 
 class Order extends Model
 {
@@ -18,6 +19,13 @@ class Order extends Model
         'status',
         'quantity',
         'price',
+        'total_amount',
         'product_id',
     ];
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Inventory::class);
+    }
 }
+
