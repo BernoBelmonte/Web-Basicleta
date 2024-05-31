@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price',10,2);
             $table->decimal('total_amount');
-            $table->unsignedBigInteger('product_id',10,2);
+            $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
         });
