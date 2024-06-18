@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
 class InventoryController extends Controller
@@ -20,7 +20,8 @@ class InventoryController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::all();
+        return view('inventories.create',['products'=>$products]);
     }
 
     /**
@@ -28,7 +29,12 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inventory = new Inventory($request->all());
+        $inventory->save();
+        foreach ($request->product_ids as $product_id){
+            $inventory->products()->attach($product_id);
+        }
+        return redirect()->action([InventroryController::class,'index']);
     }
 
     /**

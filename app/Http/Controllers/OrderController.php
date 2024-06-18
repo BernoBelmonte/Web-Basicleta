@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Order;
 class OrderController extends Controller
@@ -20,7 +20,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::all();
+        return view('orders.create',['products'=>$products]);
     }
 
     /**
@@ -28,7 +29,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order = new Order($request->all());
+        $order->save();
+        foreach ($request->product_ids as $product_id){
+            $order->products()->attach($product_id);
+        }
+        return redirect()->action([OrderController::class,'index']);
     }
 
     /**

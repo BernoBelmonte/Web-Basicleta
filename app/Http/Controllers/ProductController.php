@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -29,7 +29,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new Product($request->all());
+        $product->save();
+        return redirect()->action([ProductController::class,'index']);
     }
 
     /**
@@ -45,7 +47,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('products.edit',['product' => $product]);
     }
 
     /**
@@ -53,7 +56,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->product_name = $request->product_name;
+        $product->brand = $request->brand;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->stock_quantity = $request->stock_quantity;
     }
 
     /**

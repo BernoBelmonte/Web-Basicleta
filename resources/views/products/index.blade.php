@@ -5,25 +5,28 @@
         <title>Web Basicleta</title>
     </head>
     <body>
-        <h2>Listado de Productos</h2>
-        <table>
-            <tr>
-                <th>Nombre</th>
-                <th>Marca</th>
-                <th>Descripcion</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-            </tr>
-            @foreach ($products as $product)
-            <tr>
-                <td>{{ $product->product_name }}</td>
-                <td>{{ $product->brand }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->price }}</td>
-                <td>{{ $product->stock_quantity}}</td>
-            </tr>
-            @endforeach
-        </table>
+        <x-layout>
+            <h2>Listado de Productos</h2>
+            <a class="new-button" href="{{ route('products.create') }}">Nuevo Producto</a>
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Marca</th>  
+                    <th>Descripcion</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+                @foreach ($products as $product)
+                <tr>
+                    <td>{{ $product->product_name }}</td>
+                    <td>{{ $product->brand }}</td>
+                    <td>{{ $product->description }}</td>
+                    <td>{{ $product->price }}</td>
+                    <td>{{ $product->stock_quantity}}</td>
+                </tr>
+                @endforeach
+            </table>
+        </x-layout>
     </body>
 </html>
 
