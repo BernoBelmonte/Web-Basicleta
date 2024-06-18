@@ -4,12 +4,14 @@
         @csrf
         <label>Nombre del cliente:</label>
         <input type="text" name="customer_name">
-        <label>Correodel cliente:</label>
+        <label>Correo del cliente:</label>
         <input type="text" name="customer_email">
         <label>Telefono del cliente:</label>
         <input type="text" name="customer_phone">
         <label>Fecha:</label>
         <input type="date" name="order_date">
+        <labe>Cantidad total:</labe>
+        <input type="text" name="total_amount">
         <label>Estado:</label>
         <input type="text" name="status">
         <label>ID Producto:</label>

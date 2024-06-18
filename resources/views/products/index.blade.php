@@ -9,6 +9,7 @@
             <h2>Listado de Productos</h2>
             <a class="new-button" href="{{ route('products.create') }}">Nuevo Producto</a>
             <table>
+                <th>Acción</th>
                 <tr>
                     <th>Nombre</th>
                     <th>Marca</th>  
@@ -23,6 +24,9 @@
                     <td>{{ $product->description }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->stock_quantity}}</td>
+                    <td>
+                        <a href="{{ route('products.edit', $product->id) }}">Editar</a>
+                    </td>
                 </tr>
                 @endforeach
             </table>

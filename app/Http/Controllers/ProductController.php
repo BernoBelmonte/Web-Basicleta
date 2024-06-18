@@ -39,7 +39,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('products.view', ['product' => $product]);
     }
 
     /**
@@ -62,6 +63,8 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->stock_quantity = $request->stock_quantity;
+        $product->save();
+        return redirect()->action([ProductController::class, 'index']);
     }
 
     /**
@@ -69,6 +72,13 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(DB::table('products')->where('product_id', '=', $id)->first() != null){
+            return redirect()->back()->withErrors(['mensaje' => 'El producto no puede ser eliminado.']);
+        }
+        else{
+                $product = Product::findOrFail($id);
+                $product->delete();
+                return redirect()->action([ProductController::class, 'index']);
+        }
     }
 }

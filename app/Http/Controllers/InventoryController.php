@@ -42,7 +42,8 @@ class InventoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $inventory = Inventory::findOrFail($id);
+        return view('inventories.view', ['inventory' => $inventory]);
     }
 
     /**
@@ -50,7 +51,8 @@ class InventoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $inventory = Inventory::findOrFail($id);
+        return view('inventories.edit',['inventory' => $inventory]);
     }
 
     /**
@@ -58,7 +60,15 @@ class InventoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $inventory = Inventory::findOrFail($id);
+        $inventory->product_id = $request->product_id;
+        $inventory->products()->detach();
+        foreach ($request->product_ids as $product_id){
+            $inventory->products()->attach($product_id);
+        }
+        $inventory->last_updated = $request->last_updated;
+        $inventory->category = $request->category;
+        $inventory->stock_quantity = $request->stock_quantity;
     }
 
     /**
@@ -66,6 +76,13 @@ class InventoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(DB::table('inventories')->where('inventory_id', '=', $id)->first() != null){
+            return redirect()->back()->withErrors(['mensaje' => 'El inventario no puede ser eliminado.']);
+        }
+        else{
+                $inventory = Inventory::findOrFail($id);
+                $inventory->delete();
+                return redirect()->action([InventoryController::class, 'index']);
+        }
     }
 }
